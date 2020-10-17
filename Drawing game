@@ -1,0 +1,42 @@
+import pygame
+import sys
+from pygame.locals import *
+import numpy
+
+pygame.init()
+screen = pygame.display.set_mode((400, 600))
+
+colors = numpy.random.randint(0, 255, size=(4, 3))
+
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+#Make screen white
+screen.fill(WHITE)
+
+pygame.draw.rect(screen, BLACK, (0, 0, 400, 100))
+myfont = pygame.font.SysFont('Comic Sans MS', 30)
+textsurface = myfont.render('Some Text', False, (0, 200, 0))
+
+
+isButtonDown = 0
+while True:
+   for event in pygame.event.get():
+      if event.type == QUIT:
+         pygame.quit()
+         sys.exit()
+
+      if event.type == MOUSEBUTTONDOWN and event.button == 1:
+         prev_x, prev_y = event.pos
+         isButtonDown = 1
+
+      if event.type == MOUSEBUTTONUP and event.button == 1:
+         isButtonDown = 0
+
+      if (isButtonDown == 1):
+          x, y = event.pos
+          pygame.draw.line(screen, (255,0,0), (prev_x, prev_y), (x, y), 10)
+          prev_x = x
+          prev_y = y
+
+   pygame.display.update()
+   
